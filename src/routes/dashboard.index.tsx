@@ -365,6 +365,13 @@ function KeywordSection() {
     columnResizeMode: "onEnd",
     state: { columnSizing: prefs.columnSizing },
     onColumnSizingChange: prefs.setColumnSizing,
+    initialState: {
+      // Keyword identity stays anchored under compact so scrolling metric
+      // columns never leaves the row without a reference. The responsive
+      // pinning policy in SonarDataGrid releases it automatically when the
+      // measured container drops below the minimum centre viewport.
+      columnPinning: { left: ["kw"], right: [] },
+    },
   });
 
   return (
