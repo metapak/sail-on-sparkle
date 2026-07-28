@@ -15,6 +15,7 @@ export const overviewKeywordColumns: ColumnDef<DashboardKeyword>[] = [
     id: "kw",
     label: "Anahtar Kelime",
     role: "primary",
+    pinnable: true,
     accessorFn: (r) => r.kw,
     cell: (r) => <span className="truncate font-medium">{r.kw}</span>,
   }),
