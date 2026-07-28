@@ -73,7 +73,11 @@ export function DataGridColumnManager<T>({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 gap-1.5 border-hairline bg-surface/40 px-3 text-xs"
+          className={cn(
+            "h-9 gap-1.5 border-hairline bg-surface/40 px-3 text-xs",
+            INTERACTIVE_CONTROL,
+            TOUCH_TARGET,
+          )}
         >
           <Columns3 className="h-3.5 w-3.5" />
           Sütunları Düzenle
