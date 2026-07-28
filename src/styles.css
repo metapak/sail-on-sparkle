@@ -1,0 +1,943 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+/* Self-hosted variable fonts — no third-party font CDN at runtime. */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/noto-sans-arabic";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-hairline: var(--hairline);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-soft: var(--cobalt-soft);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  /* Semantic alias for the secondary brand accent (used by shared surfaces). */
+  --color-accent-brand: var(--violet);
+  --color-accent-brand-soft: var(--violet-soft);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* ONE Latin interface family (Inter) + Arabic family (Noto Sans Arabic).
+     `--font-editorial` and `--font-mono` are legacy aliases kept so existing
+     class usages resolve to the single system family; there is no separate
+     display or mono font anywhere in the app. */
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Noto Sans Arabic Variable", "Noto Sans Arabic", "Inter Variable", sans-serif;
+  --font-editorial: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* --- Intent / interaction / chart / table semantic color utilities --- */
+  --color-info: var(--info);
+  --color-elevated: var(--elevated);
+  --color-hover: var(--hover);
+  --color-active: var(--active);
+  --color-selected: var(--selected);
+  --color-focus-ring: var(--focus-ring);
+  --color-overlay: var(--overlay);
+  --color-chart-series-1: var(--chart-series-1);
+  --color-chart-series-2: var(--chart-series-2);
+  --color-chart-series-3: var(--chart-series-3);
+  --color-chart-series-4: var(--chart-series-4);
+  --color-chart-series-5: var(--chart-series-5);
+  --color-chart-grid: var(--chart-grid);
+  --color-chart-axis: var(--chart-axis);
+  --color-chart-crosshair: var(--chart-crosshair);
+  --color-chart-tooltip: var(--chart-tooltip);
+  --color-chart-positive: var(--chart-positive);
+  --color-chart-negative: var(--chart-negative);
+  --color-table-header: var(--table-header);
+  --color-table-row-hover: var(--table-row-hover);
+  --color-table-row-selected: var(--table-row-selected);
+  --color-table-pinned: var(--table-pinned);
+  --color-table-separator: var(--table-separator);
+  --color-table-column-divider: var(--table-column-divider);
+  --shadow-sonar-sm: var(--shadow-sm-token);
+  --shadow-sonar-md: var(--shadow-md-token);
+  --shadow-sonar-overlay: var(--shadow-overlay-token);
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Dark-first, cooler and slightly deeper than a neutral SaaS dark */
+  --background: oklch(0.135 0.018 262);
+  --foreground: oklch(0.975 0.005 260);
+  --surface: oklch(0.175 0.02 262);
+  --surface-2: oklch(0.205 0.022 262);
+  --surface-3: oklch(0.235 0.024 262);
+  --card: oklch(0.165 0.02 262);
+  --card-foreground: oklch(0.975 0.005 260);
+  --popover: oklch(0.165 0.02 262);
+  --popover-foreground: oklch(0.975 0.005 260);
+  --primary: oklch(0.66 0.19 258);
+  --primary-foreground: oklch(0.98 0.005 260);
+  --secondary: oklch(0.22 0.02 262);
+  --secondary-foreground: oklch(0.975 0.005 260);
+  --muted: oklch(0.22 0.02 262);
+  --muted-foreground: oklch(0.78 0.018 260);
+  --accent: oklch(0.24 0.03 265);
+  --accent-foreground: oklch(0.975 0.005 260);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 260);
+  /* Softer hairline borders — restraint over decoration */
+  --border: oklch(0.32 0.02 262 / 40%);
+  --hairline: oklch(0.32 0.02 262 / 22%);
+  --input: oklch(0.28 0.02 262);
+  --ring: oklch(0.66 0.19 258 / 60%);
+
+  /* Centralized chart tokens — consumed only via shared chart adapters */
+  --chart-series-1: oklch(0.66 0.19 258);
+  --chart-series-2: oklch(0.66 0.22 300);
+  --chart-series-3: oklch(0.74 0.16 155);
+  --chart-series-4: oklch(0.79 0.16 75);
+  --chart-series-5: oklch(0.66 0.22 25);
+  --chart-grid: oklch(0.975 0.005 260 / 8%);
+  --chart-axis: oklch(0.975 0.005 260 / 45%);
+  --chart-crosshair: oklch(0.66 0.19 258 / 45%);
+
+  --cobalt: oklch(0.66 0.19 258);
+  --cobalt-soft: oklch(0.66 0.19 258 / 15%);
+  --violet: oklch(0.66 0.22 300);
+  --violet-soft: oklch(0.66 0.22 300 / 15%);
+  --success: oklch(0.74 0.16 155);
+  --warning: oklch(0.79 0.16 75);
+  --danger: oklch(0.66 0.22 25);
+
+  /* Sidebar tokens — solid Sonar surface (fixes mobile drawer transparency) */
+  --sidebar: oklch(0.155 0.02 262);
+  --sidebar-foreground: oklch(0.975 0.005 260);
+  --sidebar-primary: oklch(0.66 0.19 258);
+  --sidebar-primary-foreground: oklch(0.98 0.005 260);
+  --sidebar-accent: oklch(0.22 0.02 262);
+  --sidebar-accent-foreground: oklch(0.975 0.005 260);
+  --sidebar-border: oklch(0.32 0.02 262 / 22%);
+  --sidebar-ring: oklch(0.66 0.19 258 / 60%);
+
+  /* ---- Interaction ---- */
+  --hover: oklch(0.975 0.005 260 / 6%);
+  --active: oklch(0.975 0.005 260 / 10%);
+  --selected: oklch(0.66 0.19 258 / 14%);
+  --focus-ring: oklch(0.66 0.19 258 / 75%);
+  --disabled-foreground: oklch(0.975 0.005 260 / 38%);
+  --overlay: oklch(0.10 0.015 262 / 72%);
+  --elevated: oklch(0.20 0.021 262);
+  --info: oklch(0.72 0.14 235);
+  /* ---- Charts (extra) ---- */
+  --chart-tooltip: oklch(0.185 0.02 262);
+  --chart-positive: oklch(0.74 0.16 155);
+  --chart-negative: oklch(0.66 0.22 25);
+  /* ---- Tables ---- */
+  --table-header: oklch(0.185 0.02 262);
+  --table-row-hover: oklch(0.975 0.005 260 / 5%);
+  --table-row-selected: oklch(0.66 0.19 258 / 12%);
+  --table-pinned: oklch(0.165 0.02 262);
+  --table-separator: oklch(0.32 0.02 262 / 45%);
+  --table-column-divider: oklch(0.32 0.02 262 / 32%);
+  --table-scrollbar: oklch(0.975 0.005 260 / 22%);
+  /* ---- Elevation ---- */
+  --shadow-sm-token: 0 1px 2px oklch(0 0 0 / 40%);
+  --shadow-md-token: 0 6px 20px -8px oklch(0 0 0 / 55%);
+  --shadow-overlay-token: 0 24px 60px -20px oklch(0 0 0 / 70%);
+  /* ---- Motion ---- */
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  /* ---- Z-index scale (never use raw values in components) ---- */
+  --z-sticky-header: 30;
+  --z-pinned-column: 20;
+  --z-dropdown: 40;
+  --z-popover: 50;
+  --z-tooltip: 60;
+  --z-drawer: 70;
+  --z-dialog: 80;
+  --z-toast: 90;
+
+}
+
+/* -----------------------------------------------------------------
+   Light theme — opt-in via <html class="light"> (dashboard only).
+   Designed intentionally, not a naive invert.
+------------------------------------------------------------------ */
+.light {
+  /* Softer neutral off-white — no pure white glare */
+  --background: oklch(0.965 0.004 255);       /* ~ #F4F6F8 dashboard page */
+  --foreground: oklch(0.24 0.02 262);
+  --surface: oklch(0.982 0.003 255);          /* ~ #FAFBFC workspace / table body */
+  --surface-2: oklch(0.945 0.008 255);        /* hover neutral */
+  --surface-3: oklch(0.915 0.01 255);         /* toolbar / soft controls */
+  --card: oklch(0.995 0.002 255);             /* near-white elevated */
+  --card-foreground: oklch(0.24 0.02 262);
+  --popover: #ffffff;
+  --popover-foreground: oklch(0.24 0.02 262);
+  --primary: oklch(0.56 0.19 258);
+  --primary-foreground: oklch(0.99 0.005 260);
+  --secondary: oklch(0.94 0.008 255);
+  --secondary-foreground: oklch(0.24 0.02 262);
+  --muted: oklch(0.94 0.008 255);
+  --muted-foreground: oklch(0.46 0.02 260);
+  --accent: oklch(0.93 0.02 258);
+  --accent-foreground: oklch(0.24 0.02 262);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 260);
+  --border: oklch(0.83 0.012 258 / 80%);
+  --hairline: oklch(0.82 0.012 258 / 55%);
+  --input: oklch(0.9 0.01 258);
+  --ring: oklch(0.56 0.19 258 / 50%);
+
+  /* Centralized chart tokens — light theme */
+  --chart-series-1: oklch(0.56 0.19 258);
+  --chart-series-2: oklch(0.55 0.22 300);
+  --chart-series-3: oklch(0.52 0.14 155);
+  --chart-series-4: oklch(0.62 0.16 75);
+  --chart-series-5: oklch(0.55 0.2 25);
+  --chart-grid: oklch(0.24 0.02 262 / 8%);
+  --chart-axis: oklch(0.24 0.02 262 / 50%);
+  --chart-crosshair: oklch(0.56 0.19 258 / 40%);
+
+  --cobalt: oklch(0.56 0.19 258);
+  /* Stronger selected tint so bulk & individual selection are clearly visible */
+  --cobalt-soft: oklch(0.56 0.19 258 / 14%);
+  --violet: oklch(0.55 0.22 300);
+  --violet-soft: oklch(0.55 0.22 300 / 12%);
+  --success: oklch(0.52 0.14 155);
+  --warning: oklch(0.62 0.16 75);
+  --danger: oklch(0.55 0.2 25);
+
+  --sidebar: oklch(0.982 0.003 255);
+  --sidebar-foreground: oklch(0.24 0.02 262);
+  --sidebar-primary: oklch(0.56 0.19 258);
+  --sidebar-primary-foreground: oklch(0.99 0.005 260);
+  --sidebar-accent: oklch(0.93 0.02 258);
+  --sidebar-accent-foreground: oklch(0.24 0.02 262);
+  --sidebar-border: oklch(0.84 0.012 258 / 55%);
+  --sidebar-ring: oklch(0.56 0.19 258 / 50%);
+
+  /* ---- Interaction (light) ---- */
+  --hover: oklch(0.24 0.02 262 / 5%);
+  --active: oklch(0.24 0.02 262 / 8%);
+  --selected: oklch(0.56 0.19 258 / 12%);
+  --focus-ring: oklch(0.56 0.19 258 / 70%);
+  --disabled-foreground: oklch(0.24 0.02 262 / 40%);
+  --overlay: oklch(0.24 0.02 262 / 45%);
+  --elevated: oklch(1 0 0);
+  --info: oklch(0.55 0.14 235);
+  --chart-tooltip: #ffffff;
+  --chart-positive: oklch(0.52 0.14 155);
+  --chart-negative: oklch(0.55 0.2 25);
+  --table-header: oklch(0.955 0.005 255);
+  --table-row-hover: oklch(0.24 0.02 262 / 4%);
+  --table-row-selected: oklch(0.56 0.19 258 / 10%);
+  --table-pinned: oklch(0.995 0.002 255);
+  --table-separator: oklch(0.83 0.012 258 / 85%);
+  --table-column-divider: oklch(0.86 0.01 258 / 90%);
+  --table-scrollbar: oklch(0.24 0.02 262 / 22%);
+  --shadow-sm-token: 0 1px 2px oklch(0.24 0.02 262 / 10%);
+  --shadow-md-token: 0 6px 20px -8px oklch(0.24 0.02 262 / 18%);
+  --shadow-overlay-token: 0 24px 60px -20px oklch(0.24 0.02 262 / 28%);
+
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body { font-feature-settings: "cv02","cv03","cv04","cv11","ss01"; cursor: default; }
+
+  /* Static informational text should NOT show an I-beam cursor. */
+  h1, h2, h3, h4, h5, h6, p, span, div, li, dt, dd, figcaption, blockquote, label { cursor: inherit; }
+  /* Preserve correct cursor for genuinely interactive controls. */
+  a, button, [role="button"], summary, select { cursor: pointer; }
+  a[href]:not([href]), button[disabled], [role="button"][aria-disabled="true"] { cursor: default; }
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea { cursor: text; }
+  input[type="checkbox"], input[type="radio"], input[type="range"], input[type="button"], input[type="submit"], input[type="reset"] { cursor: pointer; }
+  code, pre, kbd, samp, .allow-select { cursor: text; }
+
+  /* Editorial headline treatment — applied via class where wanted */
+  .font-editorial { font-family: var(--font-editorial); font-feature-settings: "ss01","ss02"; letter-spacing: -0.025em; }
+  .font-mono { font-family: var(--font-mono); }
+
+  /* Typography scale helpers */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--foreground) 52%, transparent);
+  }
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility bg-grid-fine {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@utility bg-radial-cobalt {
+  background:
+    radial-gradient(ellipse 85% 55% at 50% -5%, color-mix(in oklab, var(--cobalt) 28%, transparent), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 82% 8%, color-mix(in oklab, var(--violet) 16%, transparent), transparent 60%);
+}
+
+@utility glow-cobalt {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--cobalt) 40%, transparent),
+              0 10px 40px -10px color-mix(in oklab, var(--cobalt) 50%, transparent);
+}
+
+@utility atmos-violet {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in oklab, var(--violet) 10%, transparent), transparent 65%),
+    radial-gradient(ellipse 40% 30% at 85% 90%, color-mix(in oklab, var(--violet) 6%, transparent), transparent 60%);
+}
+
+@utility atmos-cobalt {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in oklab, var(--cobalt) 12%, transparent), transparent 65%),
+    radial-gradient(ellipse 40% 30% at 15% 90%, color-mix(in oklab, var(--cobalt) 6%, transparent), transparent 60%);
+}
+
+@utility atmos-blend {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, color-mix(in oklab, var(--cobalt) 8%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, color-mix(in oklab, var(--violet) 8%, transparent), transparent 60%);
+}
+
+@utility atmos-graphite {
+  background:
+    radial-gradient(ellipse 90% 40% at 50% 0%, color-mix(in oklab, var(--foreground) 2.5%, transparent), transparent 70%);
+}
+
+/* Signal motif — thin animated data line */
+@utility signal-line {
+  position: relative;
+  overflow: hidden;
+}
+@keyframes signal-sweep {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+@keyframes signal-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.35); }
+}
+.signal-dot {
+  animation: signal-pulse 2.4s ease-in-out infinite;
+}
+.signal-sweep {
+  animation: signal-sweep 3.6s ease-in-out infinite;
+}
+
+/* Subtle grain for premium depth */
+@utility noise {
+  position: relative;
+}
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Refined focus ring — precise not chunky */
+@layer base {
+  :where(button, a, [role="button"], input, select, textarea):focus-visible {
+    outline: 1px solid color-mix(in oklab, var(--cobalt) 70%, transparent);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+/* Same-page navigation offset for sticky header */
+html { scroll-padding-top: 5rem; }
+section[id] { scroll-margin-top: 5rem; }
+
+/* Logo marquee — seamless infinite scroll (duplicate content in DOM) */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-x 48s linear infinite;
+  will-change: transform;
+}
+/* Marquee never pauses on hover — continuous premium social proof */
+
+/* Signal-convergence subtle pulse */
+@keyframes signal-node {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.signal-node { animation: signal-node 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .signal-dot, .signal-sweep, .marquee-track, .signal-node { animation: none; }
+}
+
+/* Theme-aware, thin scrollbar for scoped data-grid containers. */
+.sonar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--border) 60%, transparent) transparent;
+}
+.sonar-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+.sonar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sonar-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--border) 60%, transparent);
+  border-radius: 999px;
+}
+.sonar-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
+}
+.sonar-scroll::-webkit-scrollbar-corner { background: transparent; }
+
+/* -----------------------------------------------------------------
+   Sonar data grid — selection & live-resize helpers
+------------------------------------------------------------------ */
+
+/* Selected row background — identical for individual & bulk selection. */
+.sonar-row[data-selected="true"] > td {
+  background-color: color-mix(in oklab, var(--primary) 8%, var(--background));
+}
+.sonar-row[data-selected="true"] > td:first-child {
+  box-shadow: inset 2px 0 0 0 var(--primary);
+}
+.sonar-row[data-selected="true"]:hover > td {
+  background-color: color-mix(in oklab, var(--primary) 12%, var(--background));
+}
+/* Pinned cells must stay opaque over scrolling content, in both themes. */
+.sonar-row > td[data-pinned] {
+  background-color: var(--background);
+}
+.sonar-row:hover > td[data-pinned] {
+  background-color: color-mix(in oklab, var(--muted) 40%, var(--background));
+}
+.sonar-row[data-selected="true"] > td[data-pinned] {
+  background-color: color-mix(in oklab, var(--primary) 8%, var(--background));
+}
+.sonar-row[data-active="true"] > td[data-pinned] {
+  background-color: color-mix(in oklab, var(--primary) 6%, var(--background));
+}
+/* Quick-preview active row uses ring, not a competing background. */
+.sonar-row[data-active="true"]:not([data-selected="true"]) > td {
+  background-color: color-mix(in oklab, var(--cobalt) 8%, transparent);
+}
+
+/* Full-height resize guide overlaying the grid during active drag. */
+.sonar-resize-guide {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--cobalt);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 40;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+.sonar-resize-badge {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  z-index: 41;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+  transform: translate3d(6px, 0, 0);
+  will-change: transform;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Freeze cell width transitions during resize to avoid perceived lag. */
+.sonar-resizing td, .sonar-resizing th {
+  transition: none !important;
+}
+
+/* -----------------------------------------------------------------
+   Shared table — resize affordance (central; never per-route)
+------------------------------------------------------------------ */
+.sonar-resize-handle {
+  display: grid;
+  align-items: center;
+  justify-items: end;
+  padding-inline-end: 1px;
+}
+.sonar-resize-handle-line {
+  width: 2px;
+  height: calc(100% - 16px);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--foreground) 10%, transparent);
+  transition: background-color 120ms ease, width 120ms ease;
+  pointer-events: none;
+}
+.sonar-resize-handle:hover .sonar-resize-handle-line,
+.sonar-resize-handle[data-resizing="true"] .sonar-resize-handle-line {
+  background: var(--cobalt);
+  width: 2px;
+  height: 100%;
+}
+.sonar-resize-handle[data-resizing="true"] .sonar-resize-handle-line {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--cobalt) 35%, transparent);
+}
+.sonar-resizing,
+.sonar-resizing * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+/* -----------------------------------------------------------------
+   Shared chart layer — Unovis presentation tokens
+------------------------------------------------------------------ */
+.sonar-unovis {
+  --vis-font-family: inherit;
+  --vis-tooltip-background-color: var(--popover);
+  --vis-tooltip-border-color: var(--border);
+  --vis-tooltip-text-color: var(--foreground);
+  --vis-tooltip-padding: 8px 10px;
+  --vis-tooltip-border-radius: var(--radius);
+  --vis-tooltip-shadow-color: rgba(0, 0, 0, 0.12);
+  --vis-axis-grid-color: color-mix(in oklab, var(--border) 40%, transparent);
+  --vis-axis-tick-color: transparent;
+  --vis-axis-domain-color: transparent;
+  --vis-crosshair-line-stroke-color: var(--border);
+  --vis-crosshair-circle-stroke-color: var(--popover);
+}
+.sonar-unovis .vis-axis-grid-line { stroke-dasharray: 0; }
+.sonar-unovis .vis-area { opacity: 0.1; }
+@media (prefers-reduced-motion: reduce) {
+  .sonar-unovis * { transition: none !important; animation: none !important; }
+}
+.sonar-tt { min-width: 150px; font-size: 12px; line-height: 1.55; color: var(--foreground); }
+.sonar-tt-title {
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+.sonar-tt-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.sonar-tt-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sonar-tt-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+.sonar-tt-label { color: color-mix(in oklab, var(--foreground) 65%, transparent); }
+.sonar-tt-value {
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* =================================================================
+   CENTRAL TYPOGRAPHY SYSTEM  (Phase 3)
+   Semantic roles only. Pages must not define alternative heading
+   systems — compose these utilities (or the TS registry in
+   src/design/typography.ts) instead.
+================================================================== */
+@utility type-display {
+  font-size: 2.5rem;      /* 40px */
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+@utility type-page-title {
+  font-size: 1.75rem;     /* 28px */
+  line-height: 2.125rem;  /* 34px */
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+@utility type-section-title {
+  font-size: 1.25rem;     /* 20px */
+  line-height: 1.75rem;   /* 28px */
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+@utility type-card-title {
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.375rem;  /* 22px */
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@utility type-body {
+  font-size: 0.875rem;    /* 14px */
+  line-height: 1.3125rem; /* 21px */
+  font-weight: 400;
+}
+@utility type-body-compact {
+  font-size: 0.8125rem;   /* 13px */
+  line-height: 1.1875rem; /* 19px */
+  font-weight: 450;
+}
+@utility type-caption {
+  font-size: 0.75rem;     /* 12px */
+  line-height: 1rem;      /* 16px */
+  font-weight: 400;
+}
+@utility type-eyebrow {
+  font-size: 0.6875rem;   /* 11px */
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+@utility type-table-header {
+  font-size: 0.6875rem;   /* 11px */
+  line-height: 1rem;      /* 16px */
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+@utility type-table-cell {
+  font-size: 0.8125rem;   /* 13px */
+  line-height: 1.125rem;  /* 18px */
+  font-weight: 400;
+}
+@utility type-kpi-label {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+}
+@utility type-kpi-value {
+  font-size: 1.75rem;     /* 28px */
+  line-height: 2rem;      /* 32px */
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+@utility type-tooltip {
+  font-size: 0.75rem;
+  line-height: 1.0625rem;
+  font-weight: 450;
+}
+@utility type-button {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+@utility type-input {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+@utility type-nav-item {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+/* =================================================================
+   NUMERIC METRICS — tabular numbers globally (no separate mono font)
+================================================================== */
+@layer base {
+  /* Data surfaces: tables, KPI values, charts tooltips, pagination. */
+  table th,
+  table td,
+  [data-numeric="true"],
+  .tabular-nums,
+  .font-mono,
+  .sonar-metric,
+  .sonar-kpi-value,
+  .sonar-pagination-count,
+  .vis-tooltip,
+  .recharts-tooltip-wrapper,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Arabic: full-interface script family + shaping (Phase 2/13) ---- */
+  :is(html[lang="ar"], [lang="ar"]) {
+    --font-display: var(--font-arabic);
+    --font-editorial: var(--font-arabic);
+    --font-mono: var(--font-arabic);
+    font-family: var(--font-arabic);
+    font-feature-settings: normal;
+    font-variant-ligatures: normal;
+  }
+  :is(html[lang="ar"], [lang="ar"]) body {
+    font-family: var(--font-arabic);
+    font-feature-settings: normal;
+    letter-spacing: 0;
+  }
+  /* Latin product names inside Arabic UI may fall back to Inter. */
+  :is(html[lang="ar"], [lang="ar"]) [data-latin="true"] {
+    font-family: "Inter Variable", "Inter", sans-serif;
+  }
+}
+
+
+/* ============================================================
+   SHARED ANALYTICAL VISUAL VARIANT — "analytical"
+   Opt-in only: every rule lives under `.surface-analytical`, so routes
+   that do not mount the variant (Competitors, Settings, landing…) are
+   completely unaffected. Class presets live in `src/design/analytical.ts`.
+   ============================================================ */
+.surface-analytical {
+  /* -- semantic surfaces (theme tokens, never literal colors) -- */
+  --an-page: var(--background);
+  --an-card: var(--card);
+  --an-nested: color-mix(in oklab, var(--surface) 60%, transparent);
+  --an-border: var(--border);
+  --an-border-strong: color-mix(in oklab, var(--border) 160%, transparent);
+  --an-hairline: color-mix(in oklab, var(--hairline) 60%, transparent);
+  --an-hover: var(--hover);
+  --an-selected: var(--selected);
+
+  /* -- text -- */
+  --an-text: var(--foreground);
+  --an-text-secondary: color-mix(in oklab, var(--foreground) 78%, transparent);
+  --an-text-muted: var(--muted-foreground);
+
+  /* -- shape & rhythm -- */
+  --an-radius-card: var(--radius-lg);
+  --an-radius-control: 0.5rem;
+  --an-gap-section: 1.25rem;
+  --an-gap-card: 1rem;
+  --an-pad-card: 1.25rem;
+  --an-control-height: 2.25rem;
+}
+
+/* ---- section rhythm ---- */
+.surface-analytical.an-stack > * + *,
+.surface-analytical .an-stack > * + * {
+  margin-top: var(--an-gap-section);
+}
+
+/* ---- analytical card surface ---- */
+.surface-analytical .an-card {
+  background-color: var(--an-card);
+  border: 1px solid var(--an-border);
+  border-radius: var(--an-radius-card);
+  box-shadow: none;
+  padding: var(--an-pad-card);
+}
+.surface-analytical .an-card-flush {
+  padding: 0;
+  overflow: hidden;
+}
+/* Denser analytical card for data-heavy workspaces (tracked / research). */
+.surface-analytical .an-card-dense {
+  padding: 0.875rem 1rem;
+}
+
+/* ---- quiet nested surface (one level, no second hard border) ---- */
+.surface-analytical .an-nested {
+  background-color: var(--an-nested);
+  border-radius: var(--an-radius-control);
+  box-shadow: inset 0 0 0 1px var(--an-hairline);
+}
+
+/* ---- section heading hierarchy inside a card ---- */
+.surface-analytical .an-section-head .eyebrow,
+.surface-analytical .an-section-head .type-eyebrow {
+  margin-bottom: 0.25rem;
+}
+
+/* ---- metric cards: equal heights, aligned sparkline baselines ---- */
+.surface-analytical .an-kpi {
+  min-height: 152px;
+  padding: 1.125rem 1.25rem;
+}
+.surface-analytical .an-kpi .type-kpi-label {
+  letter-spacing: 0.04em;
+  font-size: 10.5px;
+}
+/* Reserve the SAME lower band in every metric card — with or without series. */
+.surface-analytical .an-kpi > .opacity-60,
+.surface-analytical .an-kpi > .h-10 {
+  height: 40px;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0.8;
+}
+.surface-analytical .an-kpi > .opacity-60 > * {
+  width: 100%;
+}
+/* Fixed note band keeps the baseline identical when a note wraps. */
+.surface-analytical .an-kpi > .type-caption {
+  min-height: 2.6em;
+}
+
+/* ---- compact, baseline-aligned control language ---- */
+.surface-analytical .an-controls :is(button, input, [role="combobox"]) {
+  border-radius: var(--an-radius-control);
+}
+/* Shared control height for REAL filter controls only. Chips, badges,
+   segmented items, tiny icon actions, pagination and popover rows keep their
+   compact sizing (excluded below). */
+.surface-analytical
+  .an-controls
+  :is(input:not([type="checkbox"]):not([type="radio"]), button, [role="combobox"]):not(
+    [data-compact],
+    [data-slot="badge"],
+    [role="option"],
+    [role="menuitem"],
+    [role="menuitemcheckbox"],
+    [role="menuitemradio"],
+    [role="tab"],
+    [data-radix-collection-item],
+    [data-pagination] *,
+    [data-pagination]
+  ) {
+  min-height: var(--an-control-height, 2.25rem);
+}
+
+
+/* ---- calm data-table container ---- */
+.surface-analytical .an-table table thead th:first-child {
+  padding-inline-start: 0.5rem;
+}
+/* Header readability: natural wrapping, max two lines, no mid-word clipping. */
+.surface-analytical .an-table thead th > div {
+  height: auto !important;
+  min-height: 44px;
+  align-items: center;
+}
+.surface-analytical .an-table thead th > div > div:first-child {
+  padding-inline: 0.625rem;
+}
+.surface-analytical .an-table thead th .line-clamp-2 {
+  text-transform: none;
+  font-size: 11px;
+  letter-spacing: 0;
+  line-height: 1.25;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* ---- pinned cells: stay on the analytical card surface (no slab) ----
+   Tints are layered as an opaque card base + the semantic tint, so pinned
+   cells stay fully opaque over horizontally scrolling content while pinned
+   and non-pinned cells resolve to the identical visible surface. */
+.surface-analytical .an-table .sonar-row > td[data-pinned] {
+  background-color: var(--an-card);
+  background-image: none;
+}
+.surface-analytical .an-table .sonar-row:hover > td[data-pinned] {
+  background-color: var(--an-card);
+  background-image: linear-gradient(var(--an-hover), var(--an-hover));
+}
+/* Selected row: pinned and non-pinned cells resolve to the SAME surface. */
+.surface-analytical .an-table .sonar-row[data-selected="true"] > td,
+.surface-analytical .an-table .sonar-row[data-selected="true"] > td[data-pinned] {
+  background-color: var(--an-card);
+  background-image: linear-gradient(var(--an-selected), var(--an-selected));
+}
+.surface-analytical .an-table .sonar-row[data-selected="true"]:hover > td,
+.surface-analytical .an-table .sonar-row[data-selected="true"]:hover > td[data-pinned] {
+  background-color: var(--an-card);
+  background-image:
+    linear-gradient(var(--an-selected), var(--an-selected)),
+    linear-gradient(var(--an-hover), var(--an-hover));
+}
+.surface-analytical
+  .an-table
+  .sonar-row[data-active="true"]:not([data-selected="true"])
+  > td[data-pinned] {
+  background-color: var(--an-card);
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--cobalt) 8%, transparent),
+    color-mix(in oklab, var(--cobalt) 8%, transparent)
+  );
+}
+
+
+/* ---- row dividers: visible in dark, restrained in light ---- */
+.surface-analytical .an-table tbody tr > td {
+  border-bottom-color: color-mix(in oklab, var(--an-border) 50%, transparent);
+}
+
+
+/* ---- empty / loading / error surfaces ---- */
+.surface-analytical .an-state {
+  background-color: var(--an-nested);
+  border-radius: var(--an-radius-card);
+  box-shadow: inset 0 0 0 1px var(--an-hairline);
+}
+
+
+/* Horizontal scroll affordance for analytical tables (edge fades). */
+.sonar-scroll-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 4;
+}
+.sonar-scroll-fade-start {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, color-mix(in oklab, var(--background) 70%, transparent), transparent);
+}
+.sonar-scroll-fade-end {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, color-mix(in oklab, var(--background) 70%, transparent), transparent);
+}
