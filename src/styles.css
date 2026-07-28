@@ -446,6 +446,36 @@ section[id] { scroll-margin-top: 5rem; }
 }
 .sonar-scroll::-webkit-scrollbar-corner { background: transparent; }
 
+/* Horizontal scroll affordance — edge fades shown only when the table
+   actually has more content off-screen in that direction. Positioned
+   over the scroll viewport, non-interactive, disappears when the user
+   scrolls to the corresponding edge. */
+.sonar-scroll-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 120ms ease;
+}
+.sonar-scroll-fade-start {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--background) 92%, transparent),
+    transparent
+  );
+}
+.sonar-scroll-fade-end {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    color-mix(in oklab, var(--background) 92%, transparent),
+    transparent
+  );
+}
+
 /* -----------------------------------------------------------------
    Sonar data grid — selection & live-resize helpers
 ------------------------------------------------------------------ */
