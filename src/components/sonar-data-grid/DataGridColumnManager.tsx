@@ -19,6 +19,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { SonarColumnMeta } from "./types";
 import { resolveColumnLabel } from "@/components/shared/column-kit";
+import { INTERACTIVE_CONTROL, TOUCH_TARGET } from "@/components/shared/status-definitions";
 
 interface Props<T> {
   table: Table<T>;
