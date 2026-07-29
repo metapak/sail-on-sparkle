@@ -468,7 +468,6 @@ export function FilterBar({
     <div
       className={cn(
         "flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-hairline bg-surface/50 px-3 py-2",
-        "[&_>_*]:h-9",
         className,
       )}
     >
