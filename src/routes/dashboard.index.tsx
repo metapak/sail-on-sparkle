@@ -41,6 +41,8 @@ import {
   DashboardPage,
   SegmentedControl,
   SharedDataTable,
+  AnalysisPanel,
+
   DataGridColumnManager,
   useTablePreferences,
   SharedMetricHeader,
