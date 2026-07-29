@@ -64,7 +64,6 @@ import {
   LoadingSkeleton,
   SharedDataTable,
   AnalysisPanel,
-
   DataGridPagination,
   DataGridDensitySelector,
   DataGridColumnManager,
@@ -1086,7 +1085,6 @@ function CompetitorsPage() {
     }
   }, [pageIndex, totalPages, gapsQuery.isFetching]);
 
-
   /* ---------- handlers ---------- */
   const handleToggleTracking = React.useCallback(
     (row: CompetitorKeywordGapRow) => {
@@ -1336,7 +1334,6 @@ function CompetitorsPage() {
           }}
         />
       </AnalysisPanel>
-
 
       <KeywordDetailDrawer
         rowId={detailRowId}

@@ -42,7 +42,6 @@ import {
   SegmentedControl,
   SharedDataTable,
   AnalysisPanel,
-
   DataGridColumnManager,
   useTablePreferences,
   SharedMetricHeader,
@@ -398,7 +397,6 @@ function KeywordSection() {
       }
     >
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px]">
-
         <div className={cn(ANALYTICAL_TABLE, "min-w-0")}>
           <SharedDataTable
             table={overviewTable}
@@ -471,7 +469,6 @@ function KeywordSection() {
         </div>
       </div>
     </AnalysisPanel>
-
   );
 }
 
