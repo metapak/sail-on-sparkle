@@ -1075,6 +1075,16 @@ function CompetitorsPage() {
   const total = gapsData?.total ?? 0;
   const totalPages = gapsData?.totalPages ?? 1;
 
+  /* Keep the page index valid: a shrinking result set (mutation, tighter
+     filter) must step back to the last real page instead of rendering a blank
+     grid. A refreshed array with the same shape never resets the page. */
+  React.useEffect(() => {
+    if (!gapsQuery.isFetching && pageIndex > totalPages - 1) {
+      setPageIndex(Math.max(0, totalPages - 1));
+    }
+  }, [pageIndex, totalPages, gapsQuery.isFetching]);
+
+
   /* ---------- handlers ---------- */
   const handleToggleTracking = React.useCallback(
     (row: CompetitorKeywordGapRow) => {
