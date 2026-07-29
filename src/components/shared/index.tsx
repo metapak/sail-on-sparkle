@@ -416,10 +416,15 @@ export interface PageHeaderProps {
 /** Unified page header for every analytical route. */
 export function PageHeader({ eyebrow, title, description, actions, className }: PageHeaderProps) {
   return (
-    <div className={cn("mb-4 flex flex-wrap items-end justify-between gap-3", className)}>
+    <div
+      className={cn(
+        "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-hairline pb-4",
+        className,
+      )}
+    >
       <div className="min-w-0">
         {eyebrow && <div className="type-eyebrow mb-1 text-muted-foreground">{eyebrow}</div>}
-        <h1 className="type-page-title">{title}</h1>
+        <h1 className="type-section-title">{title}</h1>
         {description && (
           <p className="type-body-compact mt-1 max-w-2xl text-muted-foreground">{description}</p>
         )}
