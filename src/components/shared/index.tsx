@@ -38,6 +38,9 @@ import {
 // via the neutral `SharedDataTableProps<T>` surface. `SonarDataGrid` is
 // re-exported for the shared/domain layer only.
 export { SharedDataTable, type SharedDataTableProps } from "./table";
+// One shared panel language for tables, charts and analysis sections.
+export { AnalysisPanel, type AnalysisPanelProps } from "./analysis-panel";
+
 
 /* ---------------- Status / classification registry ---------------- */
 import { StatusPill as SharedStatusPill } from "./status-definitions";
