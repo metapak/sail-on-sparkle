@@ -1258,102 +1258,83 @@ function CompetitorsPage() {
 
       <VisibilityChartPanel competitorIds={competitorIds} />
 
-      <Panel className={ANALYTICAL_CARD_FLUSH}>
-        <div
-          className={cn(
-            "border-b border-[color:var(--border)] px-4 py-3 sm:px-5",
-            ANALYTICAL_SECTION_HEAD,
-          )}
-        >
-          <SectionHead
-            eyebrow="Anahtar Kelime Boşluk Analizi"
-            title="Anahtar Kelime Boşluk Tablosu"
-            sub="Sizin ve rakiplerinizin sıralamalarını, yalnızca rakiplerinizin sıralandığı kelimeler dahil olmak üzere karşılaştırın."
-          />
-        </div>
-        <FilterBar
-          className={cn(
-            ANALYTICAL_CONTROLS,
-            "rounded-none border-0 border-b border-[color:var(--border)] bg-transparent px-4 py-2.5 sm:px-5",
-          )}
-        >
-          <div className="relative flex-1 min-w-[200px] max-w-md">
-            <SearchIcon className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={ui.search}
-              onChange={(e) => setUi((f) => ({ ...f, search: e.target.value }))}
-              placeholder="Anahtar kelime ara…"
-              className="h-8 pl-8 text-xs"
-            />
-          </div>
-          <Select
-            value={ui.competitorFocus}
-            onValueChange={(v) => setUi((f) => ({ ...f, competitorFocus: v }))}
-          >
-            <SelectTrigger className="h-8 w-[180px] border-hairline text-xs">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all" className="text-xs">
-                Tüm rakipler
-              </SelectItem>
-              {selectedApps
-                .filter((a) => !a.isOwn)
-                .map((c) => (
-                  <SelectItem key={c.id} value={c.id} className="text-xs">
-                    Yalnızca {c.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-          <FilterPopover filters={ui} setFilters={setUi} />
-          <div className="ml-auto flex items-center gap-1.5">
-            <DataGridDensitySelector value={density} onChange={setDensity} />
-            <DataGridColumnManager
-              table={table}
-              onReset={prefs.resetAll}
-              onMoveColumn={moveColumn}
-              onReorderColumns={reorderColumns}
-            />
-          </div>
-        </FilterBar>
+      <AnalysisPanel
+        eyebrow="Anahtar Kelime Boşluk Analizi"
+        title="Anahtar Kelime Boşluk Tablosu"
+        description="Sizin ve rakiplerinizin sıralamalarını, yalnızca rakiplerinizin sıralandığı kelimeler dahil olmak üzere karşılaştırın."
+        isError={gapsQuery.isError}
+        errorDescription="Anahtar kelime boşluk verisi yüklenemedi."
+        onRetry={() => gapsQuery.refetch()}
+        isLoading={gapsQuery.isLoading}
+        isEmpty={rows.length === 0}
+        isFiltered
+        emptyTitle="Eşleşen anahtar kelime yok"
+        emptyDescription="Filtreleri gevşetin veya farklı bir rakibe odaklanın."
+        contentClassName={ANALYTICAL_TABLE}
+        toolbar={
+          <>
+            <div className="relative min-w-[200px] max-w-md flex-1">
+              <SearchIcon className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={ui.search}
+                onChange={(e) => setUi((f) => ({ ...f, search: e.target.value }))}
+                placeholder="Anahtar kelime ara…"
+                className="h-8 pl-8 text-xs"
+              />
+            </div>
+            <Select
+              value={ui.competitorFocus}
+              onValueChange={(v) => setUi((f) => ({ ...f, competitorFocus: v }))}
+            >
+              <SelectTrigger className="h-8 w-[180px] border-hairline text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all" className="text-xs">
+                  Tüm rakipler
+                </SelectItem>
+                {selectedApps
+                  .filter((a) => !a.isOwn)
+                  .map((c) => (
+                    <SelectItem key={c.id} value={c.id} className="text-xs">
+                      Yalnızca {c.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <FilterPopover filters={ui} setFilters={setUi} />
+            <div className="ml-auto flex items-center gap-1.5">
+              <DataGridDensitySelector value={density} onChange={setDensity} />
+              <DataGridColumnManager
+                table={table}
+                onReset={prefs.resetAll}
+                onMoveColumn={moveColumn}
+                onReorderColumns={reorderColumns}
+              />
+            </div>
+          </>
+        }
+        footer={<DataGridPagination table={table} totalRows={total} />}
+      >
+        <SharedDataTable
+          table={table}
+          density={density}
+          onRowClick={(row) => setDetailRowId(row.id)}
+          isRowActive={(row) => row.id === detailRowId}
+          isLoading={gapsQuery.isLoading && !gapsData}
+          enableReorder
+          onReorder={reorderColumns}
+          onColumnWidthCommit={prefs.commitColumnWidth}
+          loadingRowCount={Math.min(pageSize, 8)}
+          bulkSelection={{
+            count: selectedRowCount,
+            itemNoun: "anahtar kelime",
+            primary: bulkActions,
+            onClear: () => setRowSelection({}),
+          }}
+        />
+      </AnalysisPanel>
 
-        {gapsQuery.isError ? (
-          <ErrorState
-            className={cn(ANALYTICAL_STATE, "m-5")}
-            description="Anahtar kelime boşluk verisi yüklenemedi."
-            onRetry={() => gapsQuery.refetch()}
-          />
-        ) : rows.length === 0 && !gapsQuery.isLoading ? (
-          <EmptyState
-            className={cn(ANALYTICAL_STATE, "m-5")}
-            title="Eşleşen anahtar kelime yok"
-            description="Filtreleri gevşetin veya farklı bir rakibe odaklanın."
-          />
-        ) : (
-          <div className={ANALYTICAL_TABLE}>
-            <SharedDataTable
-              table={table}
-              density={density}
-              onRowClick={(row) => setDetailRowId(row.id)}
-              isRowActive={(row) => row.id === detailRowId}
-              isLoading={gapsQuery.isLoading && !gapsData}
-              enableReorder
-              onReorder={reorderColumns}
-              onColumnWidthCommit={prefs.commitColumnWidth}
-              loadingRowCount={Math.min(pageSize, 8)}
-              bulkSelection={{
-                count: selectedRowCount,
-                itemNoun: "anahtar kelime",
-                primary: bulkActions,
-                onClear: () => setRowSelection({}),
-              }}
-            />
-          </div>
-        )}
-
-        <DataGridPagination table={table} totalRows={total} />
-      </Panel>
 
       <KeywordDetailDrawer
         rowId={detailRowId}
