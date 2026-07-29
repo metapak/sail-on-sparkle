@@ -41,6 +41,7 @@ import {
   DashboardPage,
   SegmentedControl,
   SharedDataTable,
+  AnalysisPanel,
   DataGridColumnManager,
   useTablePreferences,
   SharedMetricHeader,
@@ -48,11 +49,9 @@ import {
 import {
   ANALYTICAL_VARIANT,
   ANALYTICAL_CARD,
-  ANALYTICAL_CARD_FLUSH,
   ANALYTICAL_NESTED,
   ANALYTICAL_KPI,
   ANALYTICAL_TABLE,
-  ANALYTICAL_SECTION_HEAD,
 } from "@/design/analytical";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -361,6 +360,9 @@ function KeywordSection() {
     columns: overviewColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    // Stable row identity — the keyword is the real entity key here, so
+    // sorting, resizing and dataset refreshes never reshuffle row state.
+    getRowId: (r) => r.kw,
     enableColumnResizing: true,
     columnResizeMode: "onEnd",
     state: { columnSizing: prefs.columnSizing },
@@ -374,25 +376,26 @@ function KeywordSection() {
     },
   });
 
+  /* A scope switch replaces the dataset: never keep a selection that belongs
+     to the previous market. Display preferences (sizing) are preserved. */
+  React.useEffect(() => {
+    if (!overviewRows.length) return;
+    if (!overviewRows.some((r) => r.kw === selected.kw)) setSelected(overviewRows[0]);
+  }, [overviewRows, selected.kw]);
+
   return (
-    <section className={ANALYTICAL_CARD_FLUSH}>
-      <div
-        className={cn(
-          "flex flex-wrap items-end justify-between gap-2 border-b border-[color:var(--border)] px-5 py-4",
-          ANALYTICAL_SECTION_HEAD,
-        )}
-      >
-        <SectionHead
-          eyebrow="ANAHTAR KELİMELER"
-          title="Öncelikli Anahtar Kelime Fırsatları"
-          sub="Uygulamanızın mevcut gücüne ve sıralama durumuna göre önceliklendirilen anahtar kelimeler."
-        />
+    <AnalysisPanel
+      eyebrow="ANAHTAR KELİMELER"
+      title="Öncelikli Anahtar Kelime Fırsatları"
+      description="Uygulamanızın mevcut gücüne ve sıralama durumuna göre önceliklendirilen anahtar kelimeler."
+      actions={
         <DataGridColumnManager
           table={overviewTable}
           onReset={prefs.resetAll}
           onResetWidths={prefs.resetWidths}
         />
-      </div>
+      }
+    >
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className={cn(ANALYTICAL_TABLE, "min-w-0")}>
           <SharedDataTable
@@ -465,7 +468,7 @@ function KeywordSection() {
           </div>
         </div>
       </div>
-    </section>
+    </AnalysisPanel>
   );
 }
 
