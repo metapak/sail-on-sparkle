@@ -63,6 +63,8 @@ import {
   ErrorState,
   LoadingSkeleton,
   SharedDataTable,
+  AnalysisPanel,
+
   DataGridPagination,
   DataGridDensitySelector,
   DataGridColumnManager,
