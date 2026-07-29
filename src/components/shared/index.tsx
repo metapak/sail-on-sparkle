@@ -362,17 +362,15 @@ export function MetricCard({
   } else {
     body = (
       <>
-        <div className="mt-2 flex items-end gap-1">
-          <span className="type-kpi-value sonar-kpi-value">{value}</span>
-          {suffix && <span className="type-body pb-0.5 text-muted-foreground">{suffix}</span>}
+        <div className="mt-1.5 flex items-end gap-1">
+          <span className="sonar-kpi-value type-section-title">{value}</span>
+          {suffix && <span className="type-caption pb-0.5 text-muted-foreground">{suffix}</span>}
         </div>
         {series ? (
-          <div className="mt-2 opacity-60">
+          <div className="mt-1.5 opacity-70">
             <SharedSparkline data={series} color={seriesColor} reversed={seriesReversed} />
           </div>
-        ) : (
-          <div className="h-10" />
-        )}
+        ) : null}
         {note && <div className="type-caption mt-1 text-muted-foreground">{note}</div>}
       </>
     );
