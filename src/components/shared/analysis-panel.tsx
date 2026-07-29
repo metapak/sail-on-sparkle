@@ -136,7 +136,7 @@ export function AnalysisPanel({
               ? "Filtreleri gevşetin veya aramanızı değiştirin."
               : "Bu görünüm için henüz veri yok.")
           }
-          actions={emptyActions}
+          action={emptyActions}
         />
       ) : (
         <div className={cn("min-w-0", contentClassName)}>{children}</div>
