@@ -470,7 +470,8 @@ function KeywordSection() {
           </div>
         </div>
       </div>
-    </section>
+    </AnalysisPanel>
+
   );
 }
 
