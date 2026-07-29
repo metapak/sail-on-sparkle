@@ -336,8 +336,8 @@ export function MetricCard({
   const def = metricKey ? getMetricDefinition(metricKey) : undefined;
   const interactive = Boolean(onClick);
   const shell = cn(
-    "flex min-h-[128px] w-full flex-col justify-between rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-card p-5 text-left",
-    "shadow-none transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
+    "flex min-h-[108px] w-full flex-col justify-between rounded-[var(--radius-lg)] border border-hairline bg-card/70 p-4 text-left",
+    "shadow-none transition-colors hover:bg-card",
     interactive &&
       "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]",
     className,
