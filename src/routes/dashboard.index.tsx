@@ -53,7 +53,6 @@ import {
   ANALYTICAL_NESTED,
   ANALYTICAL_KPI,
   ANALYTICAL_TABLE,
-  ANALYTICAL_SECTION_HEAD,
 } from "@/design/analytical";
 
 export const Route = createFileRoute("/dashboard/")({
