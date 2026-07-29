@@ -215,7 +215,7 @@ export function ChartCard({
   return (
     <section
       className={cn(
-        "rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-card p-4 sm:p-5",
+        "rounded-[var(--radius-lg)] border border-hairline bg-card/70 p-4 sm:p-5",
         className,
       )}
     >

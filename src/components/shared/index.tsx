@@ -336,8 +336,8 @@ export function MetricCard({
   const def = metricKey ? getMetricDefinition(metricKey) : undefined;
   const interactive = Boolean(onClick);
   const shell = cn(
-    "flex min-h-[128px] w-full flex-col justify-between rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-card p-5 text-left",
-    "shadow-none transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
+    "flex min-h-[108px] w-full flex-col justify-between rounded-[var(--radius-lg)] border border-hairline bg-card/70 p-4 text-left",
+    "shadow-none transition-colors hover:bg-card",
     interactive &&
       "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]",
     className,
@@ -362,17 +362,15 @@ export function MetricCard({
   } else {
     body = (
       <>
-        <div className="mt-2 flex items-end gap-1">
-          <span className="type-kpi-value sonar-kpi-value">{value}</span>
-          {suffix && <span className="type-body pb-0.5 text-muted-foreground">{suffix}</span>}
+        <div className="mt-1.5 flex items-end gap-1">
+          <span className="sonar-kpi-value type-section-title">{value}</span>
+          {suffix && <span className="type-caption pb-0.5 text-muted-foreground">{suffix}</span>}
         </div>
         {series ? (
-          <div className="mt-2 opacity-60">
+          <div className="mt-1.5 opacity-70">
             <SharedSparkline data={series} color={seriesColor} reversed={seriesReversed} />
           </div>
-        ) : (
-          <div className="h-10" />
-        )}
+        ) : null}
         {note && <div className="type-caption mt-1 text-muted-foreground">{note}</div>}
       </>
     );
@@ -418,10 +416,15 @@ export interface PageHeaderProps {
 /** Unified page header for every analytical route. */
 export function PageHeader({ eyebrow, title, description, actions, className }: PageHeaderProps) {
   return (
-    <div className={cn("mb-4 flex flex-wrap items-end justify-between gap-3", className)}>
+    <div
+      className={cn(
+        "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-hairline pb-4",
+        className,
+      )}
+    >
       <div className="min-w-0">
         {eyebrow && <div className="type-eyebrow mb-1 text-muted-foreground">{eyebrow}</div>}
-        <h1 className="type-page-title">{title}</h1>
+        <h1 className="type-section-title">{title}</h1>
         {description && (
           <p className="type-body-compact mt-1 max-w-2xl text-muted-foreground">{description}</p>
         )}
@@ -464,7 +467,7 @@ export function FilterBar({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center gap-2 rounded-lg border border-hairline bg-surface/40 px-3 py-2",
+        "flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-hairline bg-surface/50 px-3 py-2",
         className,
       )}
     >
