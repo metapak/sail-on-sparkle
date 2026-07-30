@@ -18,7 +18,6 @@ import { SHARED_CHART_STATE_COPY } from "./chart-presets";
 import { ChartErrorState } from "./charts";
 import { AnalysisPanel } from "./analysis-panel";
 
-
 /* ---------------- TrendIndicator ---------------- */
 
 export interface TrendIndicatorProps {
@@ -261,7 +260,6 @@ export function ChartCard({
     </AnalysisPanel>
   );
 }
-
 
 /* ---------------- MetricCardGroup ---------------- */
 
