@@ -16,6 +16,7 @@ import { MetricInfoTip } from "./metric-header";
 import { getMetricDefinition } from "./metric-definitions";
 import { SHARED_CHART_STATE_COPY } from "./chart-presets";
 import { ChartErrorState } from "./charts";
+import { AnalysisPanel } from "./analysis-panel";
 
 /* ---------------- TrendIndicator ---------------- */
 
@@ -212,17 +213,51 @@ export function ChartCard({
     body = children;
   }
 
+  const {
+    eyebrow,
+    title,
+    description,
+    metricKey,
+    value,
+    delta,
+    deltaDirection = "neutral",
+    deltaPolarity = "positive",
+    dateRange,
+    actions,
+  } = header;
+  const def = metricKey ? getMetricDefinition(metricKey) : undefined;
+
   return (
-    <section
-      className={cn(
-        "rounded-[var(--radius-lg)] border border-hairline bg-card/70 p-4 sm:p-5",
-        className,
-      )}
+    <AnalysisPanel
+      eyebrow={eyebrow}
+      title={title}
+      description={[description, dateRange].filter(Boolean).join(" · ") || undefined}
+      info={def?.tooltip}
+      meta={
+        value || delta ? (
+          <div className="flex items-baseline gap-2">
+            {value && (
+              <div className="font-editorial text-2xl font-semibold tracking-tight tabular-nums">
+                {value}
+              </div>
+            )}
+            {delta && (
+              <TrendIndicator value={delta} direction={deltaDirection} polarity={deltaPolarity} />
+            )}
+          </div>
+        ) : undefined
+      }
+      actions={actions}
+      className={className}
+      contentClassName={cn("px-4 py-4 sm:px-5", bodyClassName)}
+      footer={
+        footer ? (
+          <div className="px-4 pb-4 text-[11px] text-muted-foreground sm:px-5">{footer}</div>
+        ) : undefined
+      }
     >
-      <ChartCardHeader {...header} />
-      <div className={cn("mt-4", bodyClassName)}>{body}</div>
-      {footer && <div className="mt-3 text-[11px] text-muted-foreground">{footer}</div>}
-    </section>
+      {body}
+    </AnalysisPanel>
   );
 }
 

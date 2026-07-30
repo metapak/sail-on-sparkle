@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { ResponsiveContainer, AreaChart, Area, YAxis } from "recharts";
+import { SparklineChart } from "@/components/shared/charts-sparkline";
 import { cn } from "@/lib/utils";
 
 /* ================================================================
@@ -439,41 +439,11 @@ export function ScoreBar({
   );
 }
 
-export function Sparkline({
-  data,
-  color = "var(--cobalt)",
-  reversed = false,
-}: {
-  data: number[];
-  color?: string;
-  reversed?: boolean;
-}) {
-  const points = data.map((v, i) => ({ i, v }));
-  const id = React.useId();
-  return (
-    <div className="h-10 w-full">
-      <ResponsiveContainer>
-        <AreaChart data={points} margin={{ top: 2, right: 0, bottom: 0, left: 0 }}>
-          <defs>
-            <linearGradient id={`sp-${id}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`color-mix(in oklab, ${color} 60%, transparent)`} />
-              <stop offset="100%" stopColor="transparent" />
-            </linearGradient>
-          </defs>
-          <YAxis hide domain={["dataMin", "dataMax"]} reversed={reversed} />
-          <Area
-            type="monotone"
-            dataKey="v"
-            stroke={color}
-            strokeWidth={1.5}
-            fill={`url(#sp-${id})`}
-            isAnimationActive={false}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
+/**
+ * Compact inline trend. Thin re-export of the shared sparkline renderer so
+ * this module never touches a chart engine directly.
+ */
+export const Sparkline = SparklineChart;
 
 export const STATUS_TONE: Record<OpportunityStatus, string> = {
   "Hızlı Kazanım":
