@@ -16,6 +16,8 @@ import { MetricInfoTip } from "./metric-header";
 import { getMetricDefinition } from "./metric-definitions";
 import { SHARED_CHART_STATE_COPY } from "./chart-presets";
 import { ChartErrorState } from "./charts";
+import { AnalysisPanel } from "./analysis-panel";
+
 
 /* ---------------- TrendIndicator ---------------- */
 
